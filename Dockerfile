@@ -21,6 +21,7 @@ WORKDIR $JBOSS_HOME
 RUN curl -L -O https://github.com/wildfly/wildfly/releases/download/${WILDFLY_VERSION}/wildfly-${WILDFLY_VERSION}.tar.gz && \
     tar xf wildfly-${WILDFLY_VERSION}.tar.gz && \
     mv wildfly-${WILDFLY_VERSION}/* . && \
+    mv wildfly-${WILDFLY_VERSION}/.* . && \
     rm wildfly-${WILDFLY_VERSION}.tar.gz
 
 # this path is also in JBOSS_HOME above
