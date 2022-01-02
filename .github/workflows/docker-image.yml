@@ -5,8 +5,8 @@ on:
     branches: [ master ]
 env:
   # these are used for the latest tag
-  latest-jdk: 11
-  latest-wf: 25.0.1.Final
+  LATEST_JDK: 11
+  LATEST_WF: 25.0.1.Final
 
 jobs:
   build:
@@ -38,8 +38,8 @@ jobs:
     - name: login to docker hub
       run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
     - name: pull
-      run: docker pull --platform ${{matrix.platform}} rdohna/wildfly:jdk-${{latest-jdk}}
+      run: docker pull --platform ${{matrix.platform}} rdohna/wildfly:jdk-${{LATEST_JDK}}
     - name: tag
-      run: docker tag rdohna/wildfly:${{latest-wf}}-jdk-${{latest-jdk}} rdohna/wildfly
+      run: docker tag rdohna/wildfly:${{LATEST_WF}}-jdk-${{LATEST_JDK}} rdohna/wildfly
     - name: push tag
       run: docker push rdohna/wildfly:latest
