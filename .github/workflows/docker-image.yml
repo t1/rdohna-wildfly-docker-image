@@ -3,10 +3,6 @@ name: Build and push Docker image
 on:
   push:
     branches: [ master ]
-env:
-  # these are used for the latest tag
-  LATEST_JDK: 11
-  LATEST_WF: 25.0.1.Final
 
 jobs:
   build:
@@ -34,6 +30,10 @@ jobs:
     strategy:
       matrix:
         platform: [amd64, arm64]
+    env:
+      # these are used for the latest tag
+      LATEST_JDK: 11
+      LATEST_WF: 25.0.1.Final
     steps:
     - name: login to docker hub
       run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
