@@ -3,8 +3,6 @@ FROM openjdk:${JDK_VERSION}
 ARG WILDFLY_VERSION=25.0.1.Final
 LABEL maintainer=https://github.com/t1 license=Apache-2.0 name='' build-date='' vendor=''
 
-RUN echo "Building for ${env.TARGETPLATFORM} on ${BUILDPLATFORM}"
-
 # this path is also in ENTRYPOINT below
 ENV JBOSS_HOME /opt/jboss/wildfly
 
