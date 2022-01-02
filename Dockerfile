@@ -1,4 +1,5 @@
 ARG JDK_VERSION
+ARG WILDFLY_VERSION
 FROM openjdk:${JDK_VERSION}
 LABEL maintainer=https://github.com/t1 license=Apache-2.0 name='' build-date='' vendor=''
 
@@ -17,9 +18,6 @@ RUN addgroup --system --gid 1000 wildfly \
 
 USER wildfly
 WORKDIR $JBOSS_HOME
-#------------------------------------
-ENV WILDFLY_VERSION 25.0.1.Final
-#------------------------------------
 RUN curl -L -O https://github.com/wildfly/wildfly/releases/download/$WILDFLY_VERSION/wildfly-$WILDFLY_VERSION.tar.gz && \
     tar xf wildfly-$WILDFLY_VERSION.tar.gz && \
     mv wildfly-$WILDFLY_VERSION/* . && \
