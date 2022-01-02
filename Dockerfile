@@ -1,9 +1,7 @@
 ARG JDK_VERSION
-#ARG WILDFLY_VERSION=25.0.1.Final
 FROM openjdk:${JDK_VERSION}
+ARG WILDFLY_VERSION=25.0.1.Final
 LABEL maintainer=https://github.com/t1 license=Apache-2.0 name='' build-date='' vendor=''
-
-ENV WILDFLY_VERSION 25.0.1.Final
 
 # this path is also in ENTRYPOINT below
 ENV JBOSS_HOME /opt/jboss/wildfly
@@ -20,10 +18,10 @@ RUN addgroup --system --gid 1000 wildfly \
 
 USER wildfly
 WORKDIR $JBOSS_HOME
-RUN curl -L -O https://github.com/wildfly/wildfly/releases/download/$WILDFLY_VERSION/wildfly-$WILDFLY_VERSION.tar.gz && \
-    tar xf wildfly-$WILDFLY_VERSION.tar.gz && \
-    mv wildfly-$WILDFLY_VERSION/* . && \
-    rm wildfly-$WILDFLY_VERSION.tar.gz
+RUN curl -L -O https://github.com/wildfly/wildfly/releases/download/${WILDFLY_VERSION}/wildfly-${WILDFLY_VERSION}.tar.gz && \
+    tar xf wildfly-${WILDFLY_VERSION}.tar.gz && \
+    mv wildfly-${WILDFLY_VERSION}/* . && \
+    rm wildfly-${WILDFLY_VERSION}.tar.gz
 
 # this path is also in JBOSS_HOME above
 ENTRYPOINT ["/opt/jboss/wildfly/bin/standalone.sh"]
