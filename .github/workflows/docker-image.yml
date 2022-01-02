@@ -5,8 +5,8 @@ on:
     branches: [ master ]
 env:
   # these are used for the latest tag
-  LATEST_JDK: 11
-  LATEST_WF: 25.0.1.Final
+  LATEST_JDK: ${{11}}
+  LATEST_WF: ${{25.0.1.Final}}
 
 jobs:
   build:
