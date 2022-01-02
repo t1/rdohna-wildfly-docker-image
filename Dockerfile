@@ -1,4 +1,5 @@
-FROM openjdk:11
+ARG JDK_VERSION
+FROM openjdk:${JDK_VERSION}
 LABEL maintainer=https://github.com/t1 license=Apache-2.0 name='' build-date='' vendor=''
 
 # this path is also in ENTRYPOINT below

@@ -7,6 +7,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [8, 11, 17]
+    name: build with jdk ${{matrix.java}}
     steps:
     - uses: actions/checkout@v2
     - uses: docker/setup-qemu-action@v1
@@ -14,4 +18,15 @@ jobs:
     - name: login to docker hub
       run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
     - name: build and push the images
-      run: docker buildx build --push --platform linux/arm64,linux/amd64 --tag rdohna/wildfly .
+      run: docker buildx build --push --platform linux/arm64,linux/amd64 --tag rdohna/wildfly-jdk${{matrix.java}} --build-arg JDK_VERSION=${{matrix.java}} .
+
+  tag-latest:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: login to docker hub
+      run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
+    - name: tag
+      run: docker tag rdohna/wildfly-11 rdohna/wildfly
+    - name: push tag
+      run: docker push --all-tags
