@@ -31,4 +31,4 @@ jobs:
     - name: tag
       run: docker tag rdohna/wildfly:jdk-11 rdohna/wildfly
     - name: push tag
-      run: docker push --all-tags
+      run: docker push rdohna/wildfly:latest
