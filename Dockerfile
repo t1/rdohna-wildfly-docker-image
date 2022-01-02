@@ -1,5 +1,5 @@
 ARG JDK_VERSION
-ARG WILDFLY_VERSION
+ARG WILDFLY_VERSION=25.0.1.Final
 FROM openjdk:${JDK_VERSION}
 LABEL maintainer=https://github.com/t1 license=Apache-2.0 name='' build-date='' vendor=''
 

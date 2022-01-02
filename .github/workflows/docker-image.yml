@@ -17,7 +17,7 @@ jobs:
         - 26.0.0.Final
         - 25.0.1.Final
         - 24.0.1.Final
-    name: build with jdk ${{matrix.jdk}}
+    name: build ${{matrix.wf}} with jdk ${{matrix.jdk}}
     steps:
     - uses: actions/checkout@v2
     - uses: docker/setup-qemu-action@v1
@@ -25,7 +25,7 @@ jobs:
     - name: login to docker hub
       run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
     - name: build and push the images
-      run: docker buildx build --push --platform linux/arm64,linux/amd64 --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}} --build-arg JDK_VERSION=${{matrix.jdk}} --build-arg WILDFLY_VERSION=${{matrix.wf}} .
+      run: docker buildx build --push --platform linux/arm64,linux/amd64 --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}} --build-arg JDK_VERSION=${{matrix.jdk}} .
 
   tag-latest:
     needs: [build]
