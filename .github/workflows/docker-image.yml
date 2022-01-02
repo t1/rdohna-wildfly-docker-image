@@ -1,4 +1,4 @@
-name: build and push Docker image
+name: Build and push Docker image
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
     - name: login to docker hub
       run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
     - name: build and push the images
-      run: docker buildx build --push --platform linux/arm64,linux/amd64 --tag rdohna/wildfly-jdk${{matrix.java}} --build-arg JDK_VERSION=${{matrix.java}} .
+      run: docker buildx build --push --platform linux/arm64,linux/amd64 --tag rdohna/wildfly:jdk-${{matrix.java}} --build-arg JDK_VERSION=${{matrix.java}} .
 
   tag-latest:
     needs: [build]
@@ -26,7 +26,9 @@ jobs:
     steps:
     - name: login to docker hub
       run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
+    - name: pull
+      run: docker pull rdohna/wildfly:jdk-11
     - name: tag
-      run: docker tag rdohna/wildfly-11 rdohna/wildfly
+      run: docker tag rdohna/wildfly:jdk-11 rdohna/wildfly
     - name: push tag
       run: docker push --all-tags
