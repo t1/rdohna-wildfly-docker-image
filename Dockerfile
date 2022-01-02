@@ -1,7 +1,9 @@
 ARG JDK_VERSION
-ARG WILDFLY_VERSION=25.0.1.Final
+#ARG WILDFLY_VERSION=25.0.1.Final
 FROM openjdk:${JDK_VERSION}
 LABEL maintainer=https://github.com/t1 license=Apache-2.0 name='' build-date='' vendor=''
+
+ENV WILDFLY_VERSION 25.0.1.Final
 
 # this path is also in ENTRYPOINT below
 ENV JBOSS_HOME /opt/jboss/wildfly

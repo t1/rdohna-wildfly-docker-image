@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
 env:
-  # these are used for the latest tag
+  # this is used for the `latest` tag, i.e. the supposedly most stable combination
   LATEST_TAG: 25.0.1.Final-jdk11
 
 jobs:
@@ -14,9 +14,9 @@ jobs:
       matrix:
         jdk: [8, 11]
         wf:
-        - 26.0.0.Final
+#        - 26.0.0.Final
         - 25.0.1.Final
-        - 24.0.1.Final
+#        - 24.0.1.Final
     name: build ${{matrix.wf}} with jdk ${{matrix.jdk}}
     steps:
     - uses: actions/checkout@v2
