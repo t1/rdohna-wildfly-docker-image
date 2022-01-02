@@ -37,8 +37,8 @@ jobs:
     - name: login to docker hub
       run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
     - name: pull
-      run: docker pull --platform ${{matrix.platform}} rdohna/wildfly:${{LATEST_TAG}}
+      run: docker pull --platform ${{matrix.platform}} rdohna/wildfly:${{env.LATEST_TAG}}
     - name: tag
-      run: docker tag rdohna/wildfly:${{LATEST_TAG}} rdohna/wildfly
+      run: docker tag rdohna/wildfly:${{env.LATEST_TAG}} rdohna/wildfly
     - name: push tag
       run: docker push rdohna/wildfly:latest
