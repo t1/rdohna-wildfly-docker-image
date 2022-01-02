@@ -3,18 +3,21 @@ name: Build and push Docker image
 on:
   push:
     branches: [ master ]
+env:
+  # these are used for the latest tag
+  LATEST_TAG: 25.0.1.Final-jdk11
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [8, 11]
+        jdk: [8, 11]
         wf:
         - 26.0.0.Final
         - 25.0.1.Final
         - 24.0.1.Final
-    name: build with jdk ${{matrix.java}}
+    name: build with jdk ${{matrix.jdk}}
     steps:
     - uses: actions/checkout@v2
     - uses: docker/setup-qemu-action@v1
@@ -22,7 +25,7 @@ jobs:
     - name: login to docker hub
       run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
     - name: build and push the images
-      run: docker buildx build --push --platform linux/arm64,linux/amd64 --tag rdohna/wildfly:${{matrix.wf}}-jdk-${{matrix.java}} --build-arg JDK_VERSION=${{matrix.java}} --build-arg WILDFLY_VERSION=${{matrix.wf}} .
+      run: docker buildx build --push --platform linux/arm64,linux/amd64 --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}} --build-arg JDK_VERSION=${{matrix.jdk}} --build-arg WILDFLY_VERSION=${{matrix.wf}} .
 
   tag-latest:
     needs: [build]
@@ -30,15 +33,12 @@ jobs:
     strategy:
       matrix:
         platform: [amd64, arm64]
-        # these are used for the latest tag
-        latestJdk: [11]
-        latestWf: [25.0.1.Final]
     steps:
     - name: login to docker hub
       run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
     - name: pull
-      run: docker pull --platform ${{matrix.platform}} rdohna/wildfly:jdk-${{latestJdk}}
+      run: docker pull --platform ${{matrix.platform}} rdohna/wildfly:${{LATEST_TAG}}
     - name: tag
-      run: docker tag rdohna/wildfly:${{latestWf}}-jdk-${{latestJdk}} rdohna/wildfly
+      run: docker tag rdohna/wildfly:${{LATEST_TAG}} rdohna/wildfly
     - name: push tag
       run: docker push rdohna/wildfly:latest
