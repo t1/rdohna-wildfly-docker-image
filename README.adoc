@@ -1,0 +1,3 @@
+= WildFly Docker Image
+
+This is for development purposes, not for production!
