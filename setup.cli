@@ -1,0 +1,33 @@
+embed-server --std-out=echo
+
+/system-property=resteasy.preferJacksonOverJsonB:add(value=false)
+/system-property=jdk.includeInExceptions:add(value=hostInfo)
+
+# logging
+/subsystem=logging/console-handler=CONSOLE:write-attribute(name=level,value=ALL)
+/subsystem=logging/logger=com.github.t1:add(level=DEBUG)
+/subsystem=logging/logger=io.smallrye.graphql:add(level=DEBUG)
+/subsystem=logging/logger=io.smallrye.graphql.servlet:add(level=INFO)
+#/subsystem=logging/logger=io.jaegertracing.Configuration:add(level=INFO)
+
+# opentracing
+#/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=jaeger:add(host=localhost, port=6831)
+#/subsystem=microprofile-opentracing-smallrye/jaeger-tracer=jaeger-demo:add(sampler-type=const, sampler-param=1, reporter-log-spans=true, sender-binding=jaeger)
+#/subsystem=microprofile-opentracing-smallrye:write-attribute(name=default-tracer, value=jaeger-demo)
+
+# fault-tolerance
+#/extension=org.wildfly.extension.microprofile.fault-tolerance-smallrye:add
+#/subsystem=microprofile-fault-tolerance-smallrye:add
+
+# health
+#/extension=org.wildfly.extension.microprofile.health-smallrye:add
+#/subsystem=microprofile-health-smallrye:add(security-enabled=false, empty-liveness-checks-status="${env.MP_HEALTH_EMPTY_LIVENESS_CHECKS_STATUS:UP}", empty-readiness-checks-status="${env.MP_HEALTH_EMPTY_READINESS_CHECKS_STATUS:UP}")
+
+# metrics
+#/extension=org.wildfly.extension.microprofile.metrics-smallrye:add
+#/subsystem=microprofile-metrics-smallrye:add(security-enabled=false, prefix="${wildfly.metrics.prefix:wildfly}", exposed-subsystems=["*"])
+#/subsystem=ejb3:write-attribute(name=statistics-enabled,value=true)
+#/subsystem=transactions:write-attribute(name=statistics-enabled,value=true)
+#/subsystem=undertow:write-attribute(name=statistics-enabled,value=true)
+#/subsystem=webservices:write-attribute(name=statistics-enabled,value=true)
+#/subsystem=datasources/data-source=orders:write-attribute(name=statistics-enabled,value=true)
