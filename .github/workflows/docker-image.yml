@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [8, 11]
+        jdk: [8, 11, 17]
         wf:
-        - 26.0.0.Final
+        - 26.0.1.Final
         - 25.0.1.Final
     name: ${{matrix.wf}}-${{matrix.jdk}}
     steps:
