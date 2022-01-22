@@ -8,6 +8,7 @@ embed-server --std-out=echo
 /subsystem=logging/logger=com.github.t1:add(level=DEBUG)
 /subsystem=logging/logger=io.smallrye.graphql:add(level=DEBUG)
 /subsystem=logging/logger=io.smallrye.graphql.servlet:add(level=INFO)
+/subsystem=logging/logger=io.smallrye.graphql.entry.http:add(level=INFO)
 #/subsystem=logging/logger=io.jaegertracing.Configuration:add(level=INFO)
 
 # opentracing

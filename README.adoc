@@ -1,3 +1,10 @@
 = WildFly Docker Image
 
 This is for development purposes, not for production!
+
+Build multi-architecture images with:
+
+[source,cli]
+----
+docker buildx build --push --platform linux/arm64,linux/amd64 --tag rdohna/wildfly --build-arg JDK_VERSION=11  .
+----
