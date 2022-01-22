@@ -1,5 +1,5 @@
 ARG JDK_VERSION
-FROM openjdk:${JDK_VERSION}
+FROM eclipse-temurin:${JDK_VERSION}
 ARG WILDFLY_VERSION=25.0.1.Final
 LABEL maintainer=https://github.com/t1 license=Apache-2.0 name='' build-date='' vendor=''
 
@@ -10,8 +10,8 @@ ENV JBOSS_HOME /opt/jboss/wildfly
 ENV LAUNCH_JBOSS_IN_BACKGROUND true
 
 USER root
-RUN addgroup --system --gid 1000 wildfly \
-    && adduser --system --home $JBOSS_HOME --uid 1000 -gid 1000 wildfly
+RUN addgroup --system --gid 1000 wildfly && \
+    adduser --system --home $JBOSS_HOME --uid 1000 -gid 1000 wildfly
 
 USER wildfly
 WORKDIR $JBOSS_HOME
