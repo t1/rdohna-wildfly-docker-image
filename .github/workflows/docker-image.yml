@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 env:
   # this is used for the `latest` tag, i.e. the supposedly most stable combination
-  LATEST_TAG: 25.0.1.Final-jdk11
+  LATEST_TAG: 26.0.1.Final-jdk11
 
 jobs:
   build:
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [arm64]
+        platform: [arm64,amd64]
     steps:
     - name: login to docker hub
       run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
