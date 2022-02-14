@@ -26,7 +26,7 @@ jobs:
       run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
     - name: echo tags
       run: >
-        echo "${{matrix.wf}} == {{env.LATEST_WILDFLY}} = ${{matrix.wf == env.LATEST_WILDFLY}} &&
+        echo "${{matrix.wf}} == ${{env.LATEST_WILDFLY}} = ${{matrix.wf == env.LATEST_WILDFLY}} &&
         ${{matrix.jdk}} == ${{env.LATEST_JDK}} = ${{matrix.jdk == env.LATEST_JDK}}
     - name: set FINAL_TAG
       run: echo "FINAL_TAG=--tag rdohna/wildfly:latest" >> $GITHUB_ENV
