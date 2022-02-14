@@ -6,7 +6,7 @@ on:
 env:
   # these are used for the `latest` tag, i.e. the supposedly most stable combination
   LATEST_WILDFLY: 26.0.1.Final
-  LATEST_JDK: jdk11
+  LATEST_JDK: 11
 
 jobs:
   build:
@@ -27,7 +27,7 @@ jobs:
     - name: echo tags
       run: >
         echo "${{matrix.wf}} == ${{env.LATEST_WILDFLY}} = ${{matrix.wf == env.LATEST_WILDFLY}} &&
-        ${{matrix.jdk}} == ${{env.LATEST_JDK}} = ${{matrix.jdk == env.LATEST_JDK}}
+        ${{matrix.jdk}} == ${{env.LATEST_JDK}} = ${{matrix.jdk == env.LATEST_JDK}}"
     - name: set FINAL_TAG
       run: echo "FINAL_TAG=--tag rdohna/wildfly:latest" >> $GITHUB_ENV
       if: ${{matrix.wf == env.LATEST_WILDFLY && matrix.jdk == env.LATEST_JDK}}
