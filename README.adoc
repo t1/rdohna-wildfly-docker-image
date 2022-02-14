@@ -8,3 +8,5 @@ Build multi-architecture images with:
 ----
 docker buildx build --push --platform linux/arm64,linux/amd64 --tag rdohna/wildfly --build-arg JDK_VERSION=11  .
 ----
+
+See the docker-hub link on the right.
