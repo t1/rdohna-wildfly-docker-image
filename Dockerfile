@@ -15,13 +15,14 @@ RUN addgroup --system --gid 1000 wildfly && \
 
 USER wildfly
 WORKDIR $JBOSS_HOME
-RUN WILDFLY=wildfly-${WILDFLY_VERSION} && \
+RUN export WILDFLY=wildfly-${WILDFLY_VERSION} && \
     curl -L -O https://github.com/wildfly/wildfly/releases/download/${WILDFLY_VERSION}/${WILDFLY}.tar.gz && \
     tar xf ${WILDFLY}.tar.gz && \
     mv ${WILDFLY}/* . && \
     mv ${WILDFLY}/.installation . && \
     mv ${WILDFLY}/.well-known . && \
-    rm ${WILDFLY}.tar.gz
+    rm ${WILDFLY}.tar.gz && \
+    rmdir ${WILDFLY}
 
 COPY setup.cli $JBOSS_HOME/setup.cli
 RUN $JBOSS_HOME/bin/jboss-cli.sh --file=setup.cli && \
