@@ -21,8 +21,7 @@ RUN WILDFLY=wildfly-${WILDFLY_VERSION} && \
     mv ${WILDFLY}/* . && \
     mv ${WILDFLY}/.installation . && \
     mv ${WILDFLY}/.well-known . && \
-    rm ${WILDFLY}.tar.gz && \
-    rmdir ${WILDFLY}
+    rm ${WILDFLY}.tar.gz
 
 COPY setup.cli $JBOSS_HOME/setup.cli
 RUN $JBOSS_HOME/bin/jboss-cli.sh --file=setup.cli && \
