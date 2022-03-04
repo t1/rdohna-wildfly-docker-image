@@ -29,14 +29,13 @@ jobs:
       if: ${{matrix.wf == env.LATEST_WILDFLY && matrix.jdk == env.LATEST_JDK}}
     - name: build and push the base image
       run: >
-        docker buildx build --push --platform linux/arm64,linux/amd64
+        docker buildx build . --push --platform linux/arm64,linux/amd64
         --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}}
         --build-arg JDK_VERSION=${{matrix.jdk}}
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
-        .
     - name: build and push the graphql image
       run: >
-        docker buildx build --push --platform linux/arm64,linux/amd64
+        docker buildx build . --push --platform linux/arm64,linux/amd64
         --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}}-graphql
         ${{env.FINAL_TAG}}
         --build-arg JDK_VERSION=${{matrix.jdk}}
