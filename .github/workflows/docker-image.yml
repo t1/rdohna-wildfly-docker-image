@@ -42,3 +42,4 @@ jobs:
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
         --build-arg GRAPHQL_FEATURE_PACK_VERSION=1.6.0.Final
         --file Dockerfile-graphql
+      if: ${{matrix.wf == env.LATEST_WILDFLY}}
