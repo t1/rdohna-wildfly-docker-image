@@ -9,7 +9,7 @@ embed-server --std-out=echo
 /subsystem=logging/logger=io.smallrye.graphql:add(level=DEBUG)
 /subsystem=logging/logger=io.smallrye.graphql.servlet:add(level=INFO)
 /subsystem=logging/logger=io.smallrye.graphql.entry.http:add(level=INFO)
-/subsystem=logging/logger=io.jaegertracing.Configuration:add(level=INFO)
+/subsystem=logging/logger=io.jaegertracing.Configuration:write-attribute(name=level,value=INFO)
 
 # opentracing
 /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=jaeger:add(host=localhost, port=6831)
