@@ -40,5 +40,5 @@ jobs:
         ${{env.FINAL_TAG}}
         --build-arg JDK_VERSION=${{matrix.jdk}}
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
-        --build-arg WILDFLY_GRAPHQL_VERSION=1.6.0.Final
+        --build-arg GRAPHQL_FEATURE_PACK_VERSION=1.6.0.Final
         --file Dockerfile-graphql
