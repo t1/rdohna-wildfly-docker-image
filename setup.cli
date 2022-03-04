@@ -9,20 +9,20 @@ embed-server --std-out=echo
 /subsystem=logging/logger=io.smallrye.graphql:add(level=DEBUG)
 /subsystem=logging/logger=io.smallrye.graphql.servlet:add(level=INFO)
 /subsystem=logging/logger=io.smallrye.graphql.entry.http:add(level=INFO)
-#/subsystem=logging/logger=io.jaegertracing.Configuration:add(level=INFO)
+/subsystem=logging/logger=io.jaegertracing.Configuration:add(level=INFO)
 
 # opentracing
-#/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=jaeger:add(host=localhost, port=6831)
-#/subsystem=microprofile-opentracing-smallrye/jaeger-tracer=jaeger-demo:add(sampler-type=const, sampler-param=1, reporter-log-spans=true, sender-binding=jaeger)
-#/subsystem=microprofile-opentracing-smallrye:write-attribute(name=default-tracer, value=jaeger-demo)
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=jaeger:add(host=localhost, port=6831)
+/subsystem=microprofile-opentracing-smallrye/jaeger-tracer=jaeger-demo:add(sampler-type=const, sampler-param=1, reporter-log-spans=true, sender-binding=jaeger)
+/subsystem=microprofile-opentracing-smallrye:write-attribute(name=default-tracer, value=jaeger-demo)
 
 # fault-tolerance
-#/extension=org.wildfly.extension.microprofile.fault-tolerance-smallrye:add
-#/subsystem=microprofile-fault-tolerance-smallrye:add
+/extension=org.wildfly.extension.microprofile.fault-tolerance-smallrye:add
+/subsystem=microprofile-fault-tolerance-smallrye:add
 
 # health
-#/extension=org.wildfly.extension.microprofile.health-smallrye:add
-#/subsystem=microprofile-health-smallrye:add(security-enabled=false, empty-liveness-checks-status="${env.MP_HEALTH_EMPTY_LIVENESS_CHECKS_STATUS:UP}", empty-readiness-checks-status="${env.MP_HEALTH_EMPTY_READINESS_CHECKS_STATUS:UP}")
+/extension=org.wildfly.extension.microprofile.health-smallrye:add
+/subsystem=microprofile-health-smallrye:add(security-enabled=false, empty-liveness-checks-status="${env.MP_HEALTH_EMPTY_LIVENESS_CHECKS_STATUS:UP}", empty-readiness-checks-status="${env.MP_HEALTH_EMPTY_READINESS_CHECKS_STATUS:UP}")
 
 # metrics
 /extension=org.wildfly.extension.microprofile.metrics-smallrye:add
