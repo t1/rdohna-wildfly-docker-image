@@ -17,8 +17,8 @@ jobs:
       matrix:
         jdk: [8, 11, 17]
         wf:
-        - ${{WILDFLY_25}}
-        - ${{WILDFLY_26}}
+        - ${{env.WILDFLY_25}}
+        - ${{env.WILDFLY_26}}
     name: ${{matrix.wf}}-${{matrix.jdk}}
     steps:
     - uses: actions/checkout@v2
