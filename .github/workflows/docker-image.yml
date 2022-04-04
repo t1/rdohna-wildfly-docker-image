@@ -4,10 +4,8 @@ on:
   push:
     branches: [ master ]
 env:
-  WILDFLY_25: 25.0.1.Final
-  WILDFLY_26: 26.0.1.Final
   # these are used for the `latest` tag, i.e. the supposedly most stable combination
-  LATEST_WILDFLY: ${{WILDFLY_26}}
+  LATEST_WILDFLY: 26.0.1.Final
   LATEST_JDK: 11
 
 jobs:
@@ -17,8 +15,8 @@ jobs:
       matrix:
         jdk: [8, 11, 17]
         wf:
-        - ${{env.WILDFLY_25}}
-        - ${{env.WILDFLY_26}}
+        - 25.0.1.Final
+        - 26.0.1.Final
     name: ${{matrix.wf}}-${{matrix.jdk}}
     steps:
     - uses: actions/checkout@v2
@@ -38,10 +36,10 @@ jobs:
 
     - name: set graphql feature pack version 25
       run: echo "GRAPHQL_FEATURE_PACK_VERSION=1.4.2.Final" >> $GITHUB_ENV
-      if: ${{matrix.wf == env.WILDFLY_25}}
+      if: ${{matrix.wf == 25.0.1.Final}}
     - name: set graphql feature pack version 26
       run: echo "GRAPHQL_FEATURE_PACK_VERSION=1.6.0.Final" >> $GITHUB_ENV
-      if: ${{matrix.wf == env.WILDFLY_26}}
+      if: ${{matrix.wf == 26.0.1.Final}}
 
     - name: build and push the graphql image
       run: >
