@@ -40,7 +40,7 @@ jobs:
       if: ${{matrix.wf == '25.0.1.Final'}}
     - name: set graphql feature pack version 26
       run: echo "GRAPHQL_FEATURE_PACK_VERSION=1.6.0.Final" >> $GITHUB_ENV
-      if: ${{matrix.wf == '26.0.1.Final' || matrix.wf == '26.1.0.Final'}}
+      if: ${{matrix.wf == '26.0.1.Final'}}
 
     - name: build and push the graphql image
       run: >
@@ -51,3 +51,4 @@ jobs:
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
         --build-arg GRAPHQL_FEATURE_PACK_VERSION=${{env.GRAPHQL_FEATURE_PACK_VERSION}}
         --file Dockerfile-graphql
+      if: ${{matrix.wf != '26.1.0.Final'}}
