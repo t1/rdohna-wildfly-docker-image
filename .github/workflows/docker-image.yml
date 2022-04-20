@@ -17,6 +17,7 @@ jobs:
         wf:
         - 25.0.1.Final
         - 26.0.1.Final
+        - 26.1.0.Final
     name: ${{matrix.wf}}-${{matrix.jdk}}
     steps:
     - uses: actions/checkout@v2
