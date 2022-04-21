@@ -4,6 +4,7 @@ on:
   push:
     branches: [ master ]
 env:
+  POSTGRESQL: 42.3.4
   # these are used for the `latest` tag, i.e. the supposedly most stable combination
   LATEST_WILDFLY: 26.0.1.Final
   LATEST_JDK: 11
@@ -34,6 +35,7 @@ jobs:
         --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}}
         --build-arg JDK_VERSION=${{matrix.jdk}}
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
+        --build-arg POSTGRESQL_VERSION=${{POSTGRESQL}}
 
     - name: set graphql feature pack version 25
       run: echo "GRAPHQL_FEATURE_PACK_VERSION=1.4.2.Final" >> $GITHUB_ENV
@@ -50,5 +52,6 @@ jobs:
         --build-arg JDK_VERSION=${{matrix.jdk}}
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
         --build-arg GRAPHQL_FEATURE_PACK_VERSION=${{env.GRAPHQL_FEATURE_PACK_VERSION}}
+        --build-arg POSTGRESQL_VERSION=${{POSTGRESQL}}
         --file Dockerfile-graphql
       if: ${{matrix.wf != '26.1.0.Final'}}

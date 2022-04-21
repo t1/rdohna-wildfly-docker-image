@@ -1,6 +1,7 @@
 ARG JDK_VERSION
 FROM eclipse-temurin:${JDK_VERSION}
 ARG WILDFLY_VERSION
+ARG POSTGRESQL_VERSION
 LABEL maintainer=https://github.com/t1 license=Apache-2.0 name='' build-date='' vendor=''
 
 # this path is also in ENTRYPOINT below
@@ -24,9 +25,11 @@ RUN tar xf wildfly-${WILDFLY_VERSION}.tar.gz && \
     rm wildfly-${WILDFLY_VERSION}.tar.gz && \
     rmdir wildfly-${WILDFLY_VERSION}
 
+RUN curl --location --output postgresql.jar https://search.maven.org/remotecontent?filepath=org/postgresql/postgresql/${POSTGRESQL_VERSION}/postgresql-${POSTGRESQL_VERSION}.jar
+
 COPY setup.cli $JBOSS_HOME/setup.cli
 RUN $JBOSS_HOME/bin/jboss-cli.sh --file=setup.cli && \
-    rm -r setup.cli $JBOSS_HOME/standalone/configuration/standalone_xml_history
+    rm -r setup.cli $JBOSS_HOME/standalone/configuration/standalone_xml_history postgresql.jar
 
 #      app  dbg  adm
 EXPOSE 8080 8787 9990

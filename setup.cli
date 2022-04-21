@@ -31,3 +31,7 @@ embed-server --std-out=echo
 /subsystem=transactions:write-attribute(name=statistics-enabled,value=true)
 /subsystem=undertow:write-attribute(name=statistics-enabled,value=true)
 /subsystem=webservices:write-attribute(name=statistics-enabled,value=true)
+
+#postgresql
+module add --name=org.postgresql --resources=postgresql.jar --dependencies=javax.api,javax.transaction.api
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
