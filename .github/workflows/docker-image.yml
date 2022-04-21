@@ -25,7 +25,7 @@ jobs:
     - uses: docker/setup-qemu-action@v1
     - uses: docker/setup-buildx-action@v1
     - name: login to docker hub
-      run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u rdohna --password-stdin
+      run: echo "${{secrets.DOCKER_TOKEN}}" | docker login -u rdohna --password-stdin
     - name: set LATEST_TAG
       run: echo "LATEST_TAG=--tag rdohna/wildfly:latest" >> $GITHUB_ENV
       if: ${{matrix.wf == env.LATEST_WILDFLY && matrix.jdk == env.LATEST_JDK}}
@@ -35,7 +35,7 @@ jobs:
         --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}}
         --build-arg JDK_VERSION=${{matrix.jdk}}
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
-        --build-arg POSTGRESQL_VERSION=${{POSTGRESQL}}
+        --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
 
     - name: set graphql feature pack version 25
       run: echo "GRAPHQL_FEATURE_PACK_VERSION=1.4.2.Final" >> $GITHUB_ENV
@@ -52,6 +52,6 @@ jobs:
         --build-arg JDK_VERSION=${{matrix.jdk}}
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
         --build-arg GRAPHQL_FEATURE_PACK_VERSION=${{env.GRAPHQL_FEATURE_PACK_VERSION}}
-        --build-arg POSTGRESQL_VERSION=${{POSTGRESQL}}
+        --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
         --file Dockerfile-graphql
       if: ${{matrix.wf != '26.1.0.Final'}}
