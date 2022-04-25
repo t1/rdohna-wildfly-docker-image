@@ -12,11 +12,10 @@ ENV LAUNCH_JBOSS_IN_BACKGROUND=true
 
 USER root
 RUN addgroup --system --gid 1000 wildfly && \
-    adduser --system --home $JBOSS_HOME --uid 1000 -gid 1000 wildfly
+    adduser --system --home ${JBOSS_HOME} --uid 1000 -gid 1000 wildfly
 
 USER wildfly
-WORKDIR $JBOSS_HOME
-RUN mkdir standalone/configuration/files/ && chown wildfly:wildfly standalone/configuration/files/
+WORKDIR ${JBOSS_HOME}
 RUN curl -L -O https://github.com/wildfly/wildfly/releases/download/${WILDFLY_VERSION}/wildfly-${WILDFLY_VERSION}.tar.gz
 # a separate layer for easier playing around with the unpacking
 RUN tar xf wildfly-${WILDFLY_VERSION}.tar.gz && \
@@ -27,6 +26,9 @@ RUN tar xf wildfly-${WILDFLY_VERSION}.tar.gz && \
     rmdir wildfly-${WILDFLY_VERSION}
 
 RUN curl --location --output postgresql.jar https://search.maven.org/remotecontent?filepath=org/postgresql/postgresql/${POSTGRESQL_VERSION}/postgresql-${POSTGRESQL_VERSION}.jar
+
+ENV JBOSS_CONFIG_MAP ${JBOSS_HOME}/standalone/configuration/files/
+RUN mkdir -p ${JBOSS_CONFIG_MAP} && chown wildfly:wildfly ${JBOSS_CONFIG_MAP}
 
 COPY setup.cli ${JBOSS_HOME}/setup.cli
 RUN ${JBOSS_HOME}/bin/jboss-cli.sh --file=setup.cli && \
