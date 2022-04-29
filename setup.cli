@@ -36,5 +36,5 @@ embed-server --std-out=echo
 /subsystem=microprofile-config-smallrye/config-source=file-props:add(dir={path=standalone/configuration/files})
 
 #postgresql
-module add --name=org.postgresql --resources=postgresql.jar --dependencies=javax.api,javax.transaction.api
-/subsystem=datasources/jdbc-driver=postgresql:add(driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
+module add --name=org.postgresql.jdbc --resources=postgresql.jar --dependencies=javax.api,javax.transaction.api
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-module-name=org.postgresql.jdbc,driver-class-name=org.postgresql.Driver,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
