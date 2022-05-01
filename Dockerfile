@@ -2,7 +2,7 @@ ARG JDK_VERSION
 FROM eclipse-temurin:${JDK_VERSION}
 ARG WILDFLY_VERSION
 ARG POSTGRESQL_VERSION
-LABEL maintainer=https://github.com/t1 license=Apache-2.0 name='' build-date='' vendor=''
+LABEL maintainer=https://github.com/t1 license=Apache-2.0
 
 # this path is also in ENTRYPOINT below
 ENV JBOSS_HOME=/opt/jboss/wildfly
@@ -16,7 +16,8 @@ RUN addgroup --system --gid 1000 wildfly && \
 
 USER wildfly
 WORKDIR ${JBOSS_HOME}
-RUN curl -L -O https://github.com/wildfly/wildfly/releases/download/${WILDFLY_VERSION}/wildfly-${WILDFLY_VERSION}.tar.gz
+RUN echo "alias l='ls -lahF'" >> .bashrc && \
+    curl -L -O https://github.com/wildfly/wildfly/releases/download/${WILDFLY_VERSION}/wildfly-${WILDFLY_VERSION}.tar.gz
 # a separate layer for easier playing around with the unpacking
 RUN tar xf wildfly-${WILDFLY_VERSION}.tar.gz && \
     mv wildfly-${WILDFLY_VERSION}/* . && \
