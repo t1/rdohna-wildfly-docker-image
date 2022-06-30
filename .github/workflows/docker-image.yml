@@ -6,7 +6,7 @@ on:
 env:
   POSTGRESQL: 42.3.4
   # these are used for the `latest` tag, i.e. the supposedly most stable combination
-  LATEST_WILDFLY: 26.0.1.Final
+  LATEST_WILDFLY: 26.1.1.Final
   LATEST_JDK: 11
 
 jobs:
@@ -19,6 +19,7 @@ jobs:
         - 25.0.1.Final
         - 26.0.1.Final
         - 26.1.0.Final
+        - 26.1.1.Final
     name: ${{matrix.wf}}-${{matrix.jdk}}
     steps:
     - uses: actions/checkout@v2
@@ -41,8 +42,8 @@ jobs:
       run: echo "GRAPHQL_FEATURE_PACK_VERSION=1.4.2.Final" >> $GITHUB_ENV
       if: ${{matrix.wf == '25.0.1.Final'}}
     - name: set graphql feature pack version 26
-      run: echo "GRAPHQL_FEATURE_PACK_VERSION=1.6.0.Final" >> $GITHUB_ENV
-      if: ${{matrix.wf == '26.0.1.Final'}}
+      run: echo "GRAPHQL_FEATURE_PACK_VERSION=1.7.0.Final" >> $GITHUB_ENV
+      if: ${{matrix.wf == '26.0.1.Final' || matrix.wf == '26.1.0.Final' || matrix.wf == '26.1.1.Final'}}
 
     - name: build and push the graphql image
       run: >
