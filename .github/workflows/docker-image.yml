@@ -5,8 +5,9 @@ on:
     branches: [ master ]
 env:
   POSTGRESQL: 42.3.4
+  GRAPHQL_FEATURE_PACK_VERSION: 1.8.0.Final
   # these are used for the `latest` tag, i.e. the supposedly most stable combination
-  LATEST_WILDFLY: 26.1.1.Final
+  LATEST_WILDFLY: 26.1.2.Final
   LATEST_JDK: 11
 
 jobs:
@@ -16,10 +17,9 @@ jobs:
       matrix:
         jdk: [8, 11, 17]
         wf:
-        - 25.0.1.Final
         - 26.0.1.Final
-        - 26.1.0.Final
-        - 26.1.1.Final
+        - 26.1.2.Final
+        - 27.0.0.Alpha4
     name: ${{matrix.wf}}-${{matrix.jdk}}
     steps:
     - uses: actions/checkout@v2
@@ -38,13 +38,6 @@ jobs:
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
 
-    - name: set graphql feature pack version 25
-      run: echo "GRAPHQL_FEATURE_PACK_VERSION=1.4.2.Final" >> $GITHUB_ENV
-      if: ${{matrix.wf == '25.0.1.Final'}}
-    - name: set graphql feature pack version 26
-      run: echo "GRAPHQL_FEATURE_PACK_VERSION=1.7.0.Final" >> $GITHUB_ENV
-      if: ${{matrix.wf == '26.0.1.Final' || matrix.wf == '26.1.0.Final' || matrix.wf == '26.1.1.Final'}}
-
     - name: build and push the graphql image
       run: >
         docker buildx build . --push --platform linux/arm64,linux/amd64
@@ -55,4 +48,3 @@ jobs:
         --build-arg GRAPHQL_FEATURE_PACK_VERSION=${{env.GRAPHQL_FEATURE_PACK_VERSION}}
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
         --file Dockerfile-graphql
-      if: ${{matrix.wf != '26.1.0.Final'}}
