@@ -37,6 +37,7 @@ jobs:
         --build-arg JDK_VERSION=${{matrix.jdk}}
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
+      if: ${{matrix.jdk > 8 || !startsWith(matrix.wf, '27.')}}
 
     - name: build and push the graphql image
       run: >
@@ -48,3 +49,4 @@ jobs:
         --build-arg GRAPHQL_FEATURE_PACK_VERSION=${{env.GRAPHQL_FEATURE_PACK_VERSION}}
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
         --file Dockerfile-graphql
+      if: ${{matrix.jdk > 8 || !startsWith(matrix.wf, '27.')}}
