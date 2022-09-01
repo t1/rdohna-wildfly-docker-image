@@ -4,15 +4,16 @@ FROM rdohna/wildfly:${WILDFLY_VERSION}-jdk${JDK_VERSION}
 # we need to redefine ARG WILDFLY_VERSION, so it's still available after the FROM
 ARG WILDFLY_VERSION
 ARG GRAPHQL_FEATURE_PACK_VERSION
+ARG GRAPHQL_FEATURE_PACK_WILDFLY_VERSION
 
 USER root
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unzip
 
 USER wildfly
-COPY install-overlay.sh $JBOSS_HOME/install-overlay.sh
-RUN ./install-overlay.sh $WILDFLY_VERSION $GRAPHQL_FEATURE_PACK_VERSION && \
-    rm install-overlay.sh
+RUN curl -L https://github.com/wildfly-extras/wildfly-graphql-feature-pack/releases/download/${GRAPHQL_FEATURE_PACK_VERSION}/wildfly-${GRAPHQL_FEATURE_PACK_WILDFLY_VERSION}-mp-graphql-${GRAPHQL_FEATURE_PACK_VERSION}-overlay.zip -o overlay.zip && \
+    unzip overlay.zip && \
+    rm overlay.zip
 
 COPY setup-graphql.cli $JBOSS_HOME/setup-graphql.cli
 RUN $JBOSS_HOME/bin/jboss-cli.sh --file=setup-graphql.cli && \
