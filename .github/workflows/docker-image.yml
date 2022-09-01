@@ -17,8 +17,7 @@ jobs:
     strategy:
       matrix:
         jdk: [8, 11, 17]
-        wf:
-        - 26.0.1.Final
+        wf: # only one major version! see WILDFLY_MAJOR_VERSION
         - 26.1.2.Final
         - 27.0.0.Alpha4
     name: ${{matrix.wf}}-${{matrix.jdk}}
@@ -31,10 +30,18 @@ jobs:
     - name: set LATEST_TAG
       run: echo "LATEST_TAG=--tag rdohna/wildfly:latest" >> $GITHUB_ENV
       if: ${{matrix.wf == env.LATEST_WILDFLY && matrix.jdk == env.LATEST_JDK}}
+    - id: get-major-version
+      uses: actions/github-script@0.9.0
+      with:
+        script: return ${{matrix.wf}}.split('.')[0]
+        result-encoding: string
+    - name: set major version tag
+      run: echo "WILDFLY_MAJOR_VERSION=${{steps.get-major-version.outputs.result}}" >> $GITHUB_ENV
+
     - name: build and push the base image
       run: >
         docker buildx build . --push --platform linux/arm64,linux/amd64
-        --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}}
+        --tag rdohna/wildfly:${{WILDFLY_MAJOR_VERSION}}-jdk${{matrix.jdk}}
         --build-arg JDK_VERSION=${{matrix.jdk}}
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
