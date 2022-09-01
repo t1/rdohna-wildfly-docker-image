@@ -53,7 +53,7 @@ jobs:
     - name: build and push the graphql image
       run: >
         docker buildx build . --push --platform linux/arm64,linux/amd64
-        --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}}-graphql
+        --tag rdohna/wildfly:${{env.WILDFLY_TAG}}-jdk${{matrix.jdk}}-graphql
         ${{env.LATEST_TAG}}
         --build-arg JDK_VERSION=${{matrix.jdk}}
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
