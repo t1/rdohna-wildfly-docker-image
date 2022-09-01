@@ -33,7 +33,7 @@ jobs:
     - id: get-major-version
       uses: actions/github-script@0.9.0
       with:
-        script: return ${{matrix.wf}}.split('.')[0]
+        script: return "${{matrix.wf}}".split('.')[0]
         result-encoding: string
     - name: set major version tag
       run: echo "WILDFLY_MAJOR_VERSION=${{steps.get-major-version.outputs.result}}" >> $GITHUB_ENV
