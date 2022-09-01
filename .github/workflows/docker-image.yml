@@ -41,7 +41,7 @@ jobs:
     - name: build and push the base image
       run: >
         docker buildx build . --push --platform linux/arm64,linux/amd64
-        --tag rdohna/wildfly:${{WILDFLY_MAJOR_VERSION}}-jdk${{matrix.jdk}}
+        --tag rdohna/wildfly:${{env.WILDFLY_MAJOR_VERSION}}-jdk${{matrix.jdk}}
         --build-arg JDK_VERSION=${{matrix.jdk}}
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
