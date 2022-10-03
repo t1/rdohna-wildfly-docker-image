@@ -55,7 +55,7 @@ jobs:
       run: >
         docker buildx build . --push --platform linux/arm64,linux/amd64
         --tag rdohna/wildfly:${{env.MAJOR_MINOR_TAG}}-jdk${{matrix.jdk}}-graphql
-        --tag rdohna/wildfly:${{env.matrix.wf}}-jdk${{matrix.jdk}}-graphql
+        --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}}-graphql
         ${{env.LATEST_TAG}}
         --build-arg BASE_VERSION=${{env.MAJOR_MINOR_TAG}}-jdk${{matrix.jdk}}
         --build-arg GRAPHQL_FEATURE_PACK_VERSION=${{env.GRAPHQL_FEATURE_PACK_VERSION}}
