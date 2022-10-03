@@ -39,12 +39,13 @@ jobs:
           return `${split[0]}.${split[1]}`
         result-encoding: string
     - name: set major version tag
-      run: echo "WILDFLY_TAG=${{steps.get-wf-tag.outputs.result}}" >> $GITHUB_ENV
+      run: echo "MAJOR_MINOR_TAG=${{steps.get-wf-tag.outputs.result}}" >> $GITHUB_ENV
 
     - name: build and push the base image
       run: >
         docker buildx build . --push --platform linux/arm64,linux/amd64
-        --tag rdohna/wildfly:${{env.WILDFLY_TAG}}-jdk${{matrix.jdk}}
+        --tag rdohna/wildfly:${{env.MAJOR_MINOR_TAG}}-jdk${{matrix.jdk}}
+        --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}}
         --build-arg JDK_VERSION=${{matrix.jdk}}
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
@@ -53,10 +54,11 @@ jobs:
     - name: build and push the graphql image
       run: >
         docker buildx build . --push --platform linux/arm64,linux/amd64
-        --tag rdohna/wildfly:${{env.WILDFLY_TAG}}-jdk${{matrix.jdk}}-graphql
+        --tag rdohna/wildfly:${{env.MAJOR_MINOR_TAG}}-jdk${{matrix.jdk}}-graphql
+        --tag rdohna/wildfly:${{env.matrix.wf}}-jdk${{matrix.jdk}}-graphql
         ${{env.LATEST_TAG}}
         --build-arg JDK_VERSION=${{matrix.jdk}}
-        --build-arg WILDFLY_VERSION=${{env.WILDFLY_TAG}}-jdk${{matrix.jdk}}
+        --build-arg WILDFLY_VERSION=${{env.WILDFLY_TAG}}
         --build-arg GRAPHQL_FEATURE_PACK_VERSION=${{env.GRAPHQL_FEATURE_PACK_VERSION}}
         --build-arg GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=${{env.GRAPHQL_FEATURE_PACK_WILDFLY_VERSION}}
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
