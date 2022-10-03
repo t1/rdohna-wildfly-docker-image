@@ -58,7 +58,7 @@ jobs:
         --tag rdohna/wildfly:${{env.matrix.wf}}-jdk${{matrix.jdk}}-graphql
         ${{env.LATEST_TAG}}
         --build-arg JDK_VERSION=${{matrix.jdk}}
-        --build-arg WILDFLY_VERSION=${{env.WILDFLY_TAG}}
+        --build-arg WILDFLY_VERSION=${{matrix.wf}}
         --build-arg GRAPHQL_FEATURE_PACK_VERSION=${{env.GRAPHQL_FEATURE_PACK_VERSION}}
         --build-arg GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=${{env.GRAPHQL_FEATURE_PACK_WILDFLY_VERSION}}
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
