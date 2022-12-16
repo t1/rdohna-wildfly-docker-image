@@ -25,7 +25,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: docker/setup-qemu-action@v1
-    - uses: docker/setup-buildx-action@v1
+    - uses: docker/setup-buildx-action@v2
     - name: login to docker hub
       run: echo "${{secrets.DOCKER_TOKEN}}" | docker login -u rdohna --password-stdin
     - name: set LATEST_TAG
