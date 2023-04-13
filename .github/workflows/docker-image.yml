@@ -26,8 +26,10 @@ jobs:
     - uses: actions/checkout@v3
     - uses: docker/setup-qemu-action@v2
     - uses: docker/setup-buildx-action@v2
-    - name: login to docker hub
-      run: echo "${{secrets.DOCKER_TOKEN}}" | docker login -u rdohna --password-stdin
+    - uses: docker/login-action@v2
+      with:
+        username: rdohna
+        password: ${{secrets.DOCKER_TOKEN}}
     - name: set LATEST_TAG
       run: echo "LATEST_TAG=--tag rdohna/wildfly:latest" >> $GITHUB_ENV
       if: ${{matrix.wf == env.LATEST_WILDFLY && matrix.jdk == env.LATEST_JDK}}
