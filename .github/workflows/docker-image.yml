@@ -39,6 +39,8 @@ jobs:
           const split = "${{matrix.wf}}".split('.');
           return `${split[0]}.${split[1]}`
         result-encoding: string
+    - name: set wf major minor version env
+      run: echo "MAJOR_MINOR_WF_VERSION=${{steps.get-wf-tag-major-minor.outputs.result}}" >> $GITHUB_ENV
     - id: get-wf-tag-major
       uses: actions/github-script@v6.4.1
       with:
@@ -46,8 +48,6 @@ jobs:
           const split = "${{matrix.wf}}".split('.');
           return `${split[0]}`
         result-encoding: string
-    - name: set wf major minor version env
-      run: echo "MAJOR_MINOR_WF_VERSION=${{steps.get-wf-tag-major-minor.outputs.result}}" >> $GITHUB_ENV
     - name: set wf major minor version env
       run: echo "MAJOR_WF_VERSION=${{steps.get-wf-tag-major.outputs.result}}" >> $GITHUB_ENV
 
@@ -64,15 +64,20 @@ jobs:
     - name: set GraphQL Feature Pack Version (26)
       run:
         echo "GRAPHQL_FEATURE_PACK_VERSION=1.8.0.Final" >> $GITHUB_ENV
-      if: ${{matrix.wf == '26'}}
+      if: ${{env.MAJOR_WF_VERSION == '26'}}
     - name: set GraphQL Feature Pack Version (27)
       run:
         echo "GRAPHQL_FEATURE_PACK_VERSION=2.0.0.Final" >> $GITHUB_ENV
-      if: ${{matrix.wf == '27'}}
+      if: ${{env.MAJOR_WF_VERSION == '27'}}
     - name: set GraphQL Feature Pack Version (28)
       run:
         echo "GRAPHQL_FEATURE_PACK_VERSION=2.2.0.Final" >> $GITHUB_ENV
-      if: ${{matrix.wf == '28'}}
+      if: ${{env.MAJOR_WF_VERSION == '28'}}
+    - name: Check GRAPHQL_FEATURE_PACK_VERSION
+      run:
+        echo "GRAPHQL_FEATURE_PACK_VERSION not mapped"
+        exit -1
+      if: ${{env.GRAPHQL_FEATURE_PACK_VERSION == ''}}
 
     - name: build and push the graphql image
       run: >
