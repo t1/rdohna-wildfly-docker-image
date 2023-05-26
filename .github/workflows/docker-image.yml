@@ -67,7 +67,7 @@ jobs:
       if: ${{startsWith(matrix.wf, '26.')}}
     - name: set GraphQL Feature Pack Version (27)
       run:
-        echo "GRAPHQL_FEATURE_PACK_VERSION=2.0.0.Final" >> $GITHUB_ENV
+        echo "GRAPHQL_FEATURE_PACK_VERSION=2.1.0.Final" >> $GITHUB_ENV
       if: ${{!startsWith(matrix.wf, '26.')}}
 
     - name: build and push the graphql image (26)
