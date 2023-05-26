@@ -25,8 +25,8 @@ embed-server --std-out=echo
 /subsystem=microprofile-health-smallrye:add(security-enabled=false, empty-liveness-checks-status="${env.MP_HEALTH_EMPTY_LIVENESS_CHECKS_STATUS:UP}", empty-readiness-checks-status="${env.MP_HEALTH_EMPTY_READINESS_CHECKS_STATUS:UP}")
 
 # metrics
-/extension=org.wildfly.extension.microprofile.metrics-smallrye:add
-/subsystem=microprofile-metrics-smallrye:add(prefix="${wildfly.metrics.prefix:wildfly}", exposed-subsystems=["*"])
+#/extension=org.wildfly.extension.microprofile.metrics-smallrye:add
+#/subsystem=microprofile-metrics-smallrye:add(prefix="${wildfly.metrics.prefix:wildfly}", exposed-subsystems=["*"])
 /subsystem=ejb3:write-attribute(name=statistics-enabled,value=true)
 /subsystem=transactions:write-attribute(name=statistics-enabled,value=true)
 /subsystem=undertow:write-attribute(name=statistics-enabled,value=true)
