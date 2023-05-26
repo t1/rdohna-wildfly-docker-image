@@ -16,8 +16,6 @@ jobs:
       matrix:
         jdk: [ 11, 17 ]
         wf: # only one major/minor version! see get-wf-tag
-        - 26.0.1.Final
-        - 26.1.3.Final
         - 27.0.1.Final
         - 28.0.1.Final
     name: ${{matrix.wf}}-${{matrix.jdk}}
@@ -61,16 +59,11 @@ jobs:
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
 
 
-    - name: set GraphQL Feature Pack Version (26)
-      run:
-        echo "GRAPHQL_FEATURE_PACK_VERSION=1.8.0.Final" >> $GITHUB_ENV
-      if: ${{startsWith(matrix.wf, '26.')}}
-    - name: set GraphQL Feature Pack Version (27)
+    - name: set GraphQL Feature Pack Version
       run:
         echo "GRAPHQL_FEATURE_PACK_VERSION=2.1.0.Final" >> $GITHUB_ENV
-      if: ${{!startsWith(matrix.wf, '26.')}}
 
-    - name: build and push the graphql image (26)
+    - name: build and push the graphql image
       run: >
         docker buildx build . --push --platform linux/arm64,linux/amd64
         --tag rdohna/wildfly:${{env.MAJOR_MINOR_WF_VERSION}}-jdk${{matrix.jdk}}-graphql
