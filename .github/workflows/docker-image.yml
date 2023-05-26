@@ -56,15 +56,16 @@ jobs:
       run:
         case "${{env.MAJOR_MINOR_WF_VERSION}}" in
         26.0|26.1)
-          PATH=1.8.0.Final/wildfly-26.0.0.Final-mp-graphql-1.8.0.Final-overlay.zip
+          echo "GRAPHQL_FEATURE_PACK_URL=https://github.com/wildfly-extras/wildfly-graphql-feature-pack/releases/download/1.8.0.Final/wildfly-26.0.0.Final-mp-graphql-1.8.0.Final-overlay.zip" >> $GITHUB_ENV
           ;;
         27.0)
-          PATH=2.0.0.Final/wildfly-27.0.0.Final-mp-graphql-2.0.0.Final-overlay.zip
+          echo "GRAPHQL_FEATURE_PACK_URL=https://github.com/wildfly-extras/wildfly-graphql-feature-pack/releases/download/2.0.0.Final/wildfly-27.0.0.Final-mp-graphql-2.0.0.Final-overlay.zip" >> $GITHUB_ENV
           ;;
         28.0)
-          PATH=2.1.0.Final/wildfly-28.0.0.Final-mp-graphql-2.1.0.Final-SNAPSHOT-overlay.zip
+          echo "GRAPHQL_FEATURE_PACK_URL=https://github.com/wildfly-extras/wildfly-graphql-feature-pack/releases/download/2.1.0.Final/wildfly-28.0.0.Final-mp-graphql-2.1.0.Final-SNAPSHOT-overlay.zip" >> $GITHUB_ENV
           ;;
-        echo "GRAPHQL_FEATURE_PACK_URL=https://github.com/wildfly-extras/wildfly-graphql-feature-pack/releases/download/${PATH}" >> $GITHUB_ENV
+        *)
+          echo "unmapped wf version ${{env.MAJOR_MINOR_WF_VERSION}}"
 
     - name: build and push the graphql image
       run: >
