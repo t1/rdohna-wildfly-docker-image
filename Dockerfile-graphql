@@ -1,13 +1,14 @@
 ARG BASE_VERSION
 FROM rdohna/wildfly:${BASE_VERSION}
-ARG GRAPHQL_FEATURE_PACK_URL
+ARG GRAPHQL_FEATURE_PACK_VERSION
+ARG GRAPHQL_FEATURE_PACK_WILDFLY_VERSION
 
 USER root
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unzip
 
 USER wildfly
-RUN curl -L ${GRAPHQL_FEATURE_PACK_URL} -o overlay.zip && \
+RUN curl -L https://github.com/wildfly-extras/wildfly-graphql-feature-pack/releases/download/${GRAPHQL_FEATURE_PACK_VERSION}/wildfly-${GRAPHQL_FEATURE_PACK_WILDFLY_VERSION}-mp-graphql-${GRAPHQL_FEATURE_PACK_VERSION}-overlay.zip -o overlay.zip && \
     unzip overlay.zip && \
     rm overlay.zip
 

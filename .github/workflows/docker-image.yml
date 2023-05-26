@@ -39,8 +39,17 @@ jobs:
           const split = "${{matrix.wf}}".split('.');
           return `${split[0]}.${split[1]}`
         result-encoding: string
+    - id: get-wf-tag-major
+      uses: actions/github-script@v6.4.1
+      with:
+        script: |
+          const split = "${{matrix.wf}}".split('.');
+          return `${split[0]}`
+        result-encoding: string
     - name: set wf major minor version env
       run: echo "MAJOR_MINOR_WF_VERSION=${{steps.get-wf-tag-major-minor.outputs.result}}" >> $GITHUB_ENV
+    - name: set wf major minor version env
+      run: echo "MAJOR_WF_VERSION=${{steps.get-wf-tag-major.outputs.result}}" >> $GITHUB_ENV
 
     - name: build and push the base image
       run: >
@@ -52,21 +61,18 @@ jobs:
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
 
 
-    - name: set GraphQL Feature Pack URL
+    - name: set GraphQL Feature Pack Version (26)
       run:
-        case "${{env.MAJOR_MINOR_WF_VERSION}}" in
-        26.0|26.1)
-          echo "GRAPHQL_FEATURE_PACK_URL=https://github.com/wildfly-extras/wildfly-graphql-feature-pack/releases/download/1.8.0.Final/wildfly-26.0.0.Final-mp-graphql-1.8.0.Final-overlay.zip" >> $GITHUB_ENV
-          ;;
-        27.0)
-          echo "GRAPHQL_FEATURE_PACK_URL=https://github.com/wildfly-extras/wildfly-graphql-feature-pack/releases/download/2.0.0.Final/wildfly-27.0.0.Final-mp-graphql-2.0.0.Final-overlay.zip" >> $GITHUB_ENV
-          ;;
-        28.0)
-          echo "GRAPHQL_FEATURE_PACK_URL=https://github.com/wildfly-extras/wildfly-graphql-feature-pack/releases/download/2.1.0.Final/wildfly-28.0.0.Final-mp-graphql-2.1.0.Final-overlay.zip" >> $GITHUB_ENV
-          ;;
-        *)
-          echo "unmapped wf version ${{env.MAJOR_MINOR_WF_VERSION}}"
-          ;;
+        echo "GRAPHQL_FEATURE_PACK_VERSION=1.8.0.Final" >> $GITHUB_ENV
+      if: ${{matrix.wf == '26')}}
+    - name: set GraphQL Feature Pack Version (27)
+      run:
+        echo "GRAPHQL_FEATURE_PACK_VERSION=2.0.0.Final" >> $GITHUB_ENV
+      if: ${{matrix.wf == '27')}}
+    - name: set GraphQL Feature Pack Version (28)
+      run:
+        echo "GRAPHQL_FEATURE_PACK_VERSION=2.2.0.Final" >> $GITHUB_ENV
+      if: ${{matrix.wf == '28')}}
 
     - name: build and push the graphql image
       run: >
@@ -75,5 +81,6 @@ jobs:
         --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}}-graphql
         ${{env.LATEST_TAG}}
         --build-arg BASE_VERSION=${{env.MAJOR_MINOR_WF_VERSION}}-jdk${{matrix.jdk}}
-        --build-arg GRAPHQL_FEATURE_PACK_URL=${{env.GRAPHQL_FEATURE_PACK_URL}}
+        --build-arg GRAPHQL_FEATURE_PACK_VERSION=${{env.GRAPHQL_FEATURE_PACK_VERSION}}
+        --build-arg GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=${{env.MAJOR_WF_VERSION}}.0.0
         --file Dockerfile-graphql
