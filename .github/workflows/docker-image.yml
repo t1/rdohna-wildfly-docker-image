@@ -32,20 +32,27 @@ jobs:
     - name: set LATEST_TAG
       run: echo "LATEST_TAG=--tag rdohna/wildfly:latest" >> $GITHUB_ENV
       if: ${{matrix.wf == env.LATEST_WILDFLY && matrix.jdk == env.LATEST_JDK}}
-    - id: get-wf-tag
+    - id: get-wf-tag-major-minor
       uses: actions/github-script@v6.4.1
       with:
         script: |
           const split = "${{matrix.wf}}".split('.');
           return `${split[0]}.${split[1]}`
         result-encoding: string
-    - name: set major version tag
-      run: echo "MAJOR_MINOR_TAG=${{steps.get-wf-tag.outputs.result}}" >> $GITHUB_ENV
+    - id: get-wf-tag-major
+      uses: actions/github-script@v6.4.1
+      with:
+        script: |
+          const split = "${{matrix.wf}}".split('.');
+          return `${split[0]}`
+        result-encoding: string
+    - name: set wf version envs
+      run: echo "MAJOR_MINOR_WF_VERSION=${{steps.get-wf-tag-major-minor.outputs.result}} MAJOR_WF_VERSION=${{steps.get-wf-tag-major.outputs.result}}" >> $GITHUB_ENV
 
     - name: build and push the base image
       run: >
         docker buildx build . --push --platform linux/arm64,linux/amd64
-        --tag rdohna/wildfly:${{env.MAJOR_MINOR_TAG}}-jdk${{matrix.jdk}}
+        --tag rdohna/wildfly:${{env.MAJOR_MINOR_WF_VERSION}}-jdk${{matrix.jdk}}
         --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}}
         --build-arg JDK_VERSION=${{matrix.jdk}}
         --build-arg WILDFLY_VERSION=${{matrix.wf}}
@@ -64,10 +71,10 @@ jobs:
     - name: build and push the graphql image (26)
       run: >
         docker buildx build . --push --platform linux/arm64,linux/amd64
-        --tag rdohna/wildfly:${{env.MAJOR_MINOR_TAG}}-jdk${{matrix.jdk}}-graphql
+        --tag rdohna/wildfly:${{env.MAJOR_MINOR_WF_VERSION}}-jdk${{matrix.jdk}}-graphql
         --tag rdohna/wildfly:${{matrix.wf}}-jdk${{matrix.jdk}}-graphql
         ${{env.LATEST_TAG}}
-        --build-arg BASE_VERSION=${{env.MAJOR_MINOR_TAG}}-jdk${{matrix.jdk}}
+        --build-arg BASE_VERSION=${{env.MAJOR_MINOR_WF_VERSION}}-jdk${{matrix.jdk}}
         --build-arg GRAPHQL_FEATURE_PACK_VERSION=${{env.GRAPHQL_FEATURE_PACK_VERSION}}
-        --build-arg GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=${{env.MAJOR_VERSION_TAG}}.0.0
+        --build-arg GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=${{env.MAJOR_WF_VERSION}}.0.0
         --file Dockerfile-graphql
