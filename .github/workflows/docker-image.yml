@@ -71,7 +71,7 @@ jobs:
       if: ${{env.MAJOR_WF_VERSION == '27'}}
     - name: set GraphQL Feature Pack Version (28)
       run:
-        echo "GRAPHQL_FEATURE_PACK_VERSION=2.2.0.Final" >> $GITHUB_ENV
+        echo "GRAPHQL_FEATURE_PACK_VERSION=2.1.0.Final" >> $GITHUB_ENV
       if: ${{env.MAJOR_WF_VERSION == '28'}}
     - name: Check GRAPHQL_FEATURE_PACK_VERSION
       run:
