@@ -46,8 +46,10 @@ jobs:
           const split = "${{matrix.wf}}".split('.');
           return `${split[0]}`
         result-encoding: string
-    - name: set wf version envs
-      run: echo "MAJOR_MINOR_WF_VERSION=${{steps.get-wf-tag-major-minor.outputs.result}} MAJOR_WF_VERSION=${{steps.get-wf-tag-major.outputs.result}}" >> $GITHUB_ENV
+    - name: set wf major minor version env
+      run: echo "MAJOR_MINOR_WF_VERSION=${{steps.get-wf-tag-major-minor.outputs.result}}" >> $GITHUB_ENV
+    - name: set wf major minor version env
+      run: echo "MAJOR_WF_VERSION=${{steps.get-wf-tag-major.outputs.result}}" >> $GITHUB_ENV
 
     - name: build and push the base image
       run: >
