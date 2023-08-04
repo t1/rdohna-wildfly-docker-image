@@ -97,5 +97,5 @@ jobs:
         ${{env.LATEST_TAG}}
         --build-arg BASE_VERSION=${{env.MAJOR_MINOR_WF_VERSION}}-jdk${{matrix.jdk}}
         --build-arg GRAPHQL_FEATURE_PACK_VERSION=${{env.GRAPHQL_FEATURE_PACK_VERSION}}
-        --build-arg GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=${{env.MAJOR_WF_VERSION}}.0.0.Final
+        --build-arg GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=${{env.GRAPHQL_FEATURE_PACK_WILDFLY_VERSION}}
         --file Dockerfile-graphql
