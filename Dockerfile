@@ -21,6 +21,7 @@ RUN echo "alias l='ls -lahF'" >> .bashrc && \
 # a separate layer for easier playing around with the unpacking
 RUN tar xf wildfly-${WILDFLY_VERSION}.tar.gz && \
     mv wildfly-${WILDFLY_VERSION}/* . && \
+    mv wildfly-${WILDFLY_VERSION}/.galleon . && \
     mv wildfly-${WILDFLY_VERSION}/.installation . && \
     mv wildfly-${WILDFLY_VERSION}/.well-known . && \
     rm wildfly-${WILDFLY_VERSION}.tar.gz && \
