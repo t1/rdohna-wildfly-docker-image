@@ -65,22 +65,18 @@ jobs:
     - name: set GraphQL Feature Pack Version (26)
       run:
         echo "GRAPHQL_FEATURE_PACK_VERSION=1.8.0.Final" >> $GITHUB_ENV
-        echo "GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=${{env.MAJOR_WF_VERSION}}.0.0.Final" >> $GITHUB_ENV
       if: ${{env.MAJOR_WF_VERSION == '26'}}
     - name: set GraphQL Feature Pack Version (27)
       run:
         echo "GRAPHQL_FEATURE_PACK_VERSION=2.0.0.Final" >> $GITHUB_ENV
-        echo "GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=${{env.MAJOR_WF_VERSION}}.0.0.Final" >> $GITHUB_ENV
       if: ${{env.MAJOR_WF_VERSION == '27'}}
     - name: set GraphQL Feature Pack Version (28)
       run:
         echo "GRAPHQL_FEATURE_PACK_VERSION=2.1.0.Final" >> $GITHUB_ENV
-        echo "GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=${{env.MAJOR_WF_VERSION}}.0.0.Final" >> $GITHUB_ENV
       if: ${{env.MAJOR_WF_VERSION == '28'}}
     - name: set GraphQL Feature Pack Version (29)
       run:
-        echo "GRAPHQL_FEATURE_PACK_VERSION=2.1.0.Final" >> $GITHUB_ENV
-        echo "GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=28.0.0.Final" >> $GITHUB_ENV
+        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.1.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=28.0.0.Final" >> $GITHUB_ENV
       if: ${{env.MAJOR_WF_VERSION == '29'}}
     - name: Check GRAPHQL_FEATURE_PACK_VERSION
       run:
@@ -89,8 +85,7 @@ jobs:
       if: ${{env.GRAPHQL_FEATURE_PACK_VERSION == ''}}
     - name: set GraphQL Feature Pack Wildfly Version
       run:
-        echo "GRAPHQL_FEATURE_PACK_WILDFLY_VERSION not mapped"
-        exit -1
+        echo "GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=${{env.MAJOR_WF_VERSION}}.0.0.Final" >> $GITHUB_ENV
       if: ${{env.GRAPHQL_FEATURE_PACK_WILDFLY_VERSION == ''}}
 
     - name: build and push the graphql image
