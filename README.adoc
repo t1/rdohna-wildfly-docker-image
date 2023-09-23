@@ -1,4 +1,4 @@
-= WildFly Docker Image
+= WildFly Docker Image image:https://github.com/t1/rdohna-wildfly-docker-image/actions/workflows/docker-image.yml/badge.svg[link=https://github.com/t1/rdohna-wildfly-docker-image/actions/workflows/docker-image.yml]
 
 This is for development purposes, not for production!
 
