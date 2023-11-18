@@ -35,7 +35,7 @@ jobs:
       run: echo "LATEST_TAG=--tag rdohna/wildfly:latest" >> $GITHUB_ENV
       if: ${{matrix.wf == env.LATEST_WILDFLY && matrix.jdk == env.LATEST_JDK}}
     - id: get-wf-tag-major-minor
-      uses: actions/github-script@v7.0.0
+      uses: actions/github-script@v7.0.1
       with:
         script: |
           const split = "${{matrix.wf}}".split('.');
@@ -44,7 +44,7 @@ jobs:
     - name: set wf major minor version env
       run: echo "MAJOR_MINOR_WF_VERSION=${{steps.get-wf-tag-major-minor.outputs.result}}" >> $GITHUB_ENV
     - id: get-wf-tag-major
-      uses: actions/github-script@v7.0.0
+      uses: actions/github-script@v7.0.1
       with:
         script: |
           const split = "${{matrix.wf}}".split('.');
