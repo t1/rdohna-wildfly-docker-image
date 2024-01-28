@@ -22,6 +22,7 @@ jobs:
         - 28.0.1.Final
         - 29.0.1.Final
         - 30.0.0.Final
+        - 31.0.0.Final
     name: ${{matrix.wf}}-${{matrix.jdk}}
     steps:
     - uses: actions/checkout@v4
@@ -81,8 +82,12 @@ jobs:
       if: ${{env.MAJOR_WF_VERSION == '29'}}
     - name: set GraphQL Feature Pack Version (30)
       run:
-        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.1.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=28.0.0.Final" >> $GITHUB_ENV
+        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.2.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=30.0.0.Final" >> $GITHUB_ENV
       if: ${{env.MAJOR_WF_VERSION == '30'}}
+    - name: set GraphQL Feature Pack Version (30)
+      run:
+        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.2.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=30.0.0.Final" >> $GITHUB_ENV
+      if: ${{env.MAJOR_WF_VERSION == '31'}}
     - name: Check GRAPHQL_FEATURE_PACK_VERSION
       run:
         echo "GRAPHQL_FEATURE_PACK_VERSION not mapped"
