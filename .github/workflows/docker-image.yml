@@ -6,7 +6,7 @@ on:
 env:
   POSTGRESQL: 42.3.4
   # these are used for the `latest` tag, i.e. the supposedly most stable combination
-  LATEST_WILDFLY: 29.0.1.Final
+  LATEST_WILDFLY: 32.0.1.Final
   LATEST_JDK: 21
 
 jobs:
@@ -16,14 +16,10 @@ jobs:
       matrix:
         jdk: [ 11, 17, 21 ]
         wf: # only one major/minor version! see get-wf-tag
-        - 26.0.1.Final
-        - 26.1.3.Final
-        - 27.0.1.Final
-        - 28.0.1.Final
-        - 29.0.1.Final
-        - 30.0.0.Final
+        - 30.0.1.Final
         - 31.0.1.Final
-    name: ${{matrix.wf}}-${{matrix.jdk}}
+        - 32.0.1.Final
+    name: "${{matrix.wf}}-${{matrix.jdk}}"
     steps:
     - uses: actions/checkout@v4
     - uses: docker/setup-qemu-action@v3
@@ -64,35 +60,23 @@ jobs:
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
 
 
-    - name: set GraphQL Feature Pack Version (26)
-      run:
-        echo "GRAPHQL_FEATURE_PACK_VERSION=1.8.0.Final" >> $GITHUB_ENV
-      if: ${{env.MAJOR_WF_VERSION == '26'}}
-    - name: set GraphQL Feature Pack Version (27)
-      run:
-        echo "GRAPHQL_FEATURE_PACK_VERSION=2.0.0.Final" >> $GITHUB_ENV
-      if: ${{env.MAJOR_WF_VERSION == '27'}}
-    - name: set GraphQL Feature Pack Version (28)
-      run:
-        echo "GRAPHQL_FEATURE_PACK_VERSION=2.1.0.Final" >> $GITHUB_ENV
-      if: ${{env.MAJOR_WF_VERSION == '28'}}
-    - name: set GraphQL Feature Pack Version (29)
-      run:
-        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.1.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=28.0.0.Final" >> $GITHUB_ENV
-      if: ${{env.MAJOR_WF_VERSION == '29'}}
     - name: set GraphQL Feature Pack Version (30)
+      if: ${{env.MAJOR_WF_VERSION == '30'}}
       run:
         echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.2.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=30.0.0.Final" >> $GITHUB_ENV
-      if: ${{env.MAJOR_WF_VERSION == '30'}}
-    - name: set GraphQL Feature Pack Version (30)
+    - name: set GraphQL Feature Pack Version (31)
+      if: ${{env.MAJOR_WF_VERSION == '31'}}
       run:
         echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.3.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=31.0.1.Final" >> $GITHUB_ENV
-      if: ${{env.MAJOR_WF_VERSION == '31'}}
+    - name: set GraphQL Feature Pack Version (32)
+      if: ${{env.MAJOR_WF_VERSION == '32'}}
+      run:
+        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.3.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=31.0.1.Final" >> $GITHUB_ENV
     - name: Check GRAPHQL_FEATURE_PACK_VERSION
+      if: ${{env.GRAPHQL_FEATURE_PACK_VERSION == ''}}
       run:
         echo "GRAPHQL_FEATURE_PACK_VERSION not mapped"
         exit -1
-      if: ${{env.GRAPHQL_FEATURE_PACK_VERSION == ''}}
     - name: set GraphQL Feature Pack Wildfly Version
       run:
         echo "GRAPHQL_FEATURE_PACK_WILDFLY_VERSION=${{env.MAJOR_WF_VERSION}}.0.0.Final" >> $GITHUB_ENV
