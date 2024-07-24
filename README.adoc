@@ -1,12 +1,5 @@
 = WildFly Docker Image image:https://github.com/t1/rdohna-wildfly-docker-image/actions/workflows/docker-image.yml/badge.svg[link=https://github.com/t1/rdohna-wildfly-docker-image/actions/workflows/docker-image.yml]
 
-This is for development purposes, not for production!
+This is for development purposes, not for production! For production use, it's probably better to use https://github.com/wildfly/wildfly-glow[WildFly Glow].
 
-Build multi-architecture images with:
-
-[source,cli]
-----
-docker buildx build --push --platform linux/arm64,linux/amd64 --tag rdohna/wildfly --build-arg JDK_VERSION=11  .
-----
-
-See the docker-hub link on the right.
+Please follow the docker-hub link on the right.
