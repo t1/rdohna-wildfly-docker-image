@@ -11,8 +11,8 @@ ENV JBOSS_HOME=/opt/jboss/wildfly
 ENV LAUNCH_JBOSS_IN_BACKGROUND=true
 
 USER root
-RUN addgroup --system --gid 1000 wildfly && \
-    adduser --system --home ${JBOSS_HOME} --uid 1000 -gid 1000 wildfly
+RUN groupadd --system --gid 1000 wildfly && \
+    useradd --system --home-dir ${JBOSS_HOME} --uid 1000 -gid 1000 wildfly
 
 USER wildfly
 WORKDIR ${JBOSS_HOME}
