@@ -6,7 +6,7 @@ on:
 env:
   POSTGRESQL: 42.3.4
   # these are used for the `latest` tag, i.e. the supposedly most stable combination
-  LATEST_WILDFLY: 33.0.1.Final
+  LATEST_WILDFLY: 33.0.2.Final
   LATEST_JDK: 21
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
         wf: # only one major/minor version! see get-wf-tag
         - 31.0.1.Final
         - 32.0.1.Final
-        - 33.0.1.Final
+        - 33.0.2.Final
     name: "${{matrix.wf}}-${{matrix.jdk}}"
     steps:
     - uses: actions/checkout@v4
