@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
 env:
-  POSTGRESQL: 42.3.4
+  POSTGRESQL: 42.7.4
   # these are used for the `latest` tag, i.e. the supposedly most stable combination
   LATEST_WILDFLY: 33.0.2.Final
   LATEST_JDK: 21
