@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [ 11, 17, 21 ]
+        jdk: [ 17, 21, 23 ]
         wf: # only one major/minor version! see get-wf-tag
         - 32.0.1.Final
         - 33.0.2.Final
