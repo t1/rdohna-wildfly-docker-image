@@ -6,7 +6,7 @@ on:
 env:
   POSTGRESQL: 42.7.4
   # these are used for the `latest` tag, i.e. the supposedly most stable combination
-  LATEST_WILDFLY: 34.0.1.Final
+  LATEST_WILDFLY: 35.0.1.Final
   LATEST_JDK: 21
 
 jobs:
@@ -19,6 +19,7 @@ jobs:
         - 32.0.1.Final
         - 33.0.2.Final
         - 34.0.1.Final
+        - 35.0.1.Final
     name: "${{matrix.wf}}-${{matrix.jdk}}"
     steps:
     - uses: actions/checkout@v4
@@ -70,6 +71,10 @@ jobs:
         echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.5.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=33.0.0.Final" >> $GITHUB_ENV
     - name: set GraphQL Feature Pack Version (34)
       if: ${{env.MAJOR_WF_VERSION == '34'}}
+      run:
+        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.5.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=33.0.0.Final" >> $GITHUB_ENV
+    - name: set GraphQL Feature Pack Version (35)
+      if: ${{env.MAJOR_WF_VERSION == '35'}}
       run:
         echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.5.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=33.0.0.Final" >> $GITHUB_ENV
     - name: Check GRAPHQL_FEATURE_PACK_VERSION
