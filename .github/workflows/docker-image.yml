@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [ 17, 21, 24 ]
+        jdk: [ 17, 21 ]
         wf: # only one major/minor version! see get-wf-tag
         - 34.0.1.Final
         - 35.0.1.Final
-        - 36.0.0.Final
+        #- 36.0.0.Final
     name: "${{matrix.wf}}-${{matrix.jdk}}"
     steps:
     - uses: actions/checkout@v4
