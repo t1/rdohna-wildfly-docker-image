@@ -19,6 +19,7 @@ jobs:
         - 34.0.1.Final
         - 35.0.1.Final
         - 36.0.1.Final
+        - 37.0.0.Final
     name: "${{matrix.wf}}-${{matrix.jdk}}"
     steps:
     - uses: actions/checkout@v5
@@ -70,6 +71,10 @@ jobs:
         echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.5.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=33.0.0.Final" >> $GITHUB_ENV
     - name: set GraphQL Feature Pack Version (36)
       if: ${{env.MAJOR_WF_VERSION == '36'}}
+      run:
+        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.5.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=33.0.0.Final" >> $GITHUB_ENV
+    - name: set GraphQL Feature Pack Version (37)
+      if: ${{env.MAJOR_WF_VERSION == '37'}}
       run:
         echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.5.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=33.0.0.Final" >> $GITHUB_ENV
     - name: Check GRAPHQL_FEATURE_PACK_VERSION
