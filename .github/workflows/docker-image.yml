@@ -4,9 +4,9 @@ on:
   push:
     branches: [ master ]
 env:
-  POSTGRESQL: 42.7.4
+  POSTGRESQL: 42.7.7
   # these are used for the `latest` tag, i.e. the supposedly most stable combination
-  LATEST_WILDFLY: 36.0.1.Final
+  LATEST_WILDFLY: 37.0.1.Final
   LATEST_JDK: 21
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
         - 34.0.1.Final
         - 35.0.1.Final
         - 36.0.1.Final
-        - 37.0.0.Final
+        - 37.0.1.Final
     name: "${{matrix.wf}}-${{matrix.jdk}}"
     steps:
     - uses: actions/checkout@v5
