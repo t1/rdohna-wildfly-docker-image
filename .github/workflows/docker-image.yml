@@ -6,7 +6,7 @@ on:
 env:
   POSTGRESQL: 42.7.7
   # these are used for the `latest` tag, i.e. the supposedly most stable combination
-  LATEST_WILDFLY: 37.0.1.Final
+  LATEST_WILDFLY: 38.0.1.Final
   LATEST_JDK: 21
 
 jobs:
@@ -16,10 +16,9 @@ jobs:
       matrix:
         jdk: [ 17, 21 ]
         wf: # only one major/minor version! see get-wf-tag
-        - 34.0.1.Final
-        - 35.0.1.Final
         - 36.0.1.Final
         - 37.0.1.Final
+        - 38.0.1.Final
     name: "${{matrix.wf}}-${{matrix.jdk}}"
     steps:
     - uses: actions/checkout@v6
@@ -61,22 +60,18 @@ jobs:
         --build-arg POSTGRESQL_VERSION=${{env.POSTGRESQL}}
 
 
-    - name: set GraphQL Feature Pack Version (34)
-      if: ${{env.MAJOR_WF_VERSION == '34'}}
-      run:
-        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.5.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=33.0.0.Final" >> $GITHUB_ENV
-    - name: set GraphQL Feature Pack Version (35)
-      if: ${{env.MAJOR_WF_VERSION == '35'}}
-      run:
-        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.5.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=33.0.0.Final" >> $GITHUB_ENV
     - name: set GraphQL Feature Pack Version (36)
       if: ${{env.MAJOR_WF_VERSION == '36'}}
       run:
-        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.5.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=33.0.0.Final" >> $GITHUB_ENV
+        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.6.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=38.0.0.Final" >> $GITHUB_ENV
     - name: set GraphQL Feature Pack Version (37)
       if: ${{env.MAJOR_WF_VERSION == '37'}}
       run:
-        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.5.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=33.0.0.Final" >> $GITHUB_ENV
+        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.6.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=38.0.0.Final" >> $GITHUB_ENV
+    - name: set GraphQL Feature Pack Version (38)
+      if: ${{env.MAJOR_WF_VERSION == '38'}}
+      run:
+        echo -e "GRAPHQL_FEATURE_PACK_VERSION=2.6.0.Final\nGRAPHQL_FEATURE_PACK_WILDFLY_VERSION=38.0.0.Final" >> $GITHUB_ENV
     - name: Check GRAPHQL_FEATURE_PACK_VERSION
       if: ${{env.GRAPHQL_FEATURE_PACK_VERSION == ''}}
       run:
