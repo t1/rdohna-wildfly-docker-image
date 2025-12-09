@@ -1,7 +1,4 @@
 embed-server --std-out=echo
 
-/extension=org.wildfly.extension.microprofile.context-propagation-smallrye:add
-/subsystem=microprofile-context-propagation-smallrye:add
-
 /extension=org.wildfly.extension.microprofile.graphql-smallrye:add
 /subsystem=microprofile-graphql-smallrye:add
